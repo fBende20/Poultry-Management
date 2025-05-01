@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    
+    <div class="sidebar">
+      <h2>Poultry Management</h2>
+      <ul>
+        <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+        <li><a href="../expense/expense.html">Manage Expenses</a></li>
+        <li><a href="../sale/sale.html">Manage Sales</a></li>
+        <li><a href="../feeding/feeding.html">Manage Feeding</a></li>
+        <li><a href="../medication/medication.html">Manage Medication</a></li>
+        <li><a href="../egg/egg.html">Manage Egg Collection</a></li>
+      </ul>
+      <button id="logoutBtn" style="background:#f44336;color:white;padding:10px;border:none;border-radius:5px;">Logout</button>
+    </div>
+    
+    <div class="main-content">
+      
+      <h1 id="user-welcome"></h1>
+    </div>
+
+    
+    
+  </div>
+
+  <!-- Secure Auth Logic -->
+  <script src="../auth/auth.js"></script>
+  <script>
+    protectDashboard();
+    
+    // Logout logic
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      localStorage.removeItem('loggedInUser');
+      window.location.href = "/features/auth/login.html";
+    });
+
+    // Display the user's username
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (loggedInUser) {
+      document.getElementById("user-welcome").innerText = `${loggedInUser.username}'s Dashboard`;
+    }
+  </script>
+</body>
+</html>

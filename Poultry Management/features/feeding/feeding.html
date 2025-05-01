@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Feeding</title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Poultry Management</h2>
+      <ul>
+        <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+        <li><a href="../expense/expense.html">Manage Expenses</a></li>
+        <li><a href="../sale/sale.html">Manage Sales</a></li>
+        <li><a href="../feeding/feeding.html">Manage Feeding</a></li>
+        <li><a href="../medication/medication.html">Manage Medication</a></li>
+        <li><a href="../egg/egg.html">Manage Egg Collection</a></li>
+      </ul>
+      <button id="logoutBtn" style="background:#f44336;color:white;padding:10px;border:none;border-radius:5px;">Logout</button>
+    </div>
+    
+    <div class="main-content">
+      <h1>Manage Feeding</h1>
+      <form id="feedingForm">
+        <input type="text" id="feedingItem" placeholder="Food Item" required />
+        <input type="number" id="feedingAmount" placeholder="Amount" required />
+        <button type="submit">Add Feeding</button>
+      </form>
+
+      <h2>Feeding History</h2>
+      <ul id="feedingList"></ul>
+    </div>
+  </div>
+
+  <!-- Secure Auth Logic -->
+  <script src="../auth/auth.js"></script>
+  <script>
+    protectDashboard();
+
+    // Feeding Logic
+    document.getElementById("feedingForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const feedingItem = document.getElementById("feedingItem").value;
+      const feedingAmount = document.getElementById("feedingAmount").value;
+
+      const feedingData = { item: feedingItem, amount: feedingAmount, date: new Date().toLocaleString() };
+
+      // Get existing feeding data from localStorage
+      let feedings = JSON.parse(localStorage.getItem("feedings")) || [];
+
+      // Add new feeding to the feedings array
+      feedings.push(feedingData);
+      localStorage.setItem("feedings", JSON.stringify(feedings));
+
+      // Clear the form
+      document.getElementById("feedingForm").reset();
+
+      // Update the feeding history
+      updateFeedingList();
+    });
+
+    // Function to display feeding history
+    function updateFeedingList() {
+      const feedings = JSON.parse(localStorage.getItem("feedings")) || [];
+      const feedingList = document.getElementById("feedingList");
+      feedingList.innerHTML = "";
+
+      feedings.forEach(feeding => {
+        const li = document.createElement("li");
+        li.textContent = `${feeding.item} - ${feeding.amount}kg on ${feeding.date}`;
+        feedingList.appendChild(li);
+      });
+    }
+
+    // Initial display of feeding data
+    updateFeedingList();
+  </script>
+</body>
+</html>

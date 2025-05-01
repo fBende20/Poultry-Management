@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Sales</title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar (same as in dashboard) -->
+    <div class="sidebar">
+      <h2>Poultry Management</h2>
+      <ul>
+        <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+        <li><a href="../expense/expense.html">Manage Expenses</a></li>
+        <li><a href="../sale/sale.html">Manage Sales</a></li>
+        <li><a href="../feeding/feeding.html">Manage Feeding</a></li>
+        <li><a href="../medication/medication.html">Manage Medication</a></li>
+        <li><a href="../egg/egg.html">Manage Egg Collection</a></li>
+      </ul>
+      <button id="logoutBtn" style="background:#f44336;color:white;padding:10px;border:none;border-radius:5px;">Logout</button>
+    </div>
+    
+    <div class="main-content">
+      <h1>Manage Sales</h1>
+      <form id="salesForm">
+        <input type="text" id="saleItem" placeholder="Item Sold" required />
+        <input type="number" id="saleAmount" placeholder="Amount" required />
+        <button type="submit">Add Sale</button>
+      </form>
+
+      <h2>Sales History</h2>
+      <ul id="salesList"></ul>
+    </div>
+  </div>
+
+  <!-- Secure Auth Logic -->
+  <script src="../auth/auth.js"></script>
+  <script>
+    protectDashboard();
+
+    // Sales Logic
+    document.getElementById("salesForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const saleItem = document.getElementById("saleItem").value;
+      const saleAmount = document.getElementById("saleAmount").value;
+
+      const saleData = { item: saleItem, amount: saleAmount, date: new Date().toLocaleString() };
+
+      // Get existing sales data from localStorage
+      let sales = JSON.parse(localStorage.getItem("sales")) || [];
+
+      // Add new sale to the sales array
+      sales.push(saleData);
+      localStorage.setItem("sales", JSON.stringify(sales));
+
+      // Clear the form
+      document.getElementById("salesForm").reset();
+
+      // Update the sales history
+      updateSalesList();
+    });
+
+    // Function to display sales history
+    function updateSalesList() {
+      const sales = JSON.parse(localStorage.getItem("sales")) || [];
+      const salesList = document.getElementById("salesList");
+      salesList.innerHTML = "";
+
+      sales.forEach(sale => {
+        const li = document.createElement("li");
+        li.textContent = `${sale.item} - $${sale.amount} on ${sale.date}`;
+        salesList.appendChild(li);
+      });
+    }
+
+    // Initial display of sales data
+    updateSalesList();
+  </script>
+</body>
+</html>

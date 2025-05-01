@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Egg Collection</title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Poultry Management</h2>
+      <ul>
+        <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+        <li><a href="../expense/expense.html">Manage Expenses</a></li>
+        <li><a href="../sale/sale.html">Manage Sales</a></li>
+        <li><a href="../feeding/feeding.html">Manage Feeding</a></li>
+        <li><a href="../medication/medication.html">Manage Medication</a></li>
+        <li><a href="../egg/egg.html">Manage Egg Collection</a></li>
+      </ul>
+      <button id="logoutBtn" style="background:#f44336;color:white;padding:10px;border:none;border-radius:5px;">Logout</button>
+    </div>
+    
+    <div class="main-content">
+      <h1>Manage Egg Collection</h1>
+      <form id="eggForm">
+        <input type="number" id="eggCount" placeholder="Number of Eggs Collected" required />
+        <button type="submit">Add Egg Collection</button>
+      </form>
+
+      <h2>Egg Collection History</h2>
+      <ul id="eggList"></ul>
+    </div>
+  </div>
+
+  <!-- Secure Auth Logic -->
+  <script src="../auth/auth.js"></script>
+  <script>
+    protectDashboard();
+
+    // Egg Collection Logic
+    document.getElementById("eggForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const eggCount = document.getElementById("eggCount").value;
+
+      const eggData = { count: eggCount, date: new Date().toLocaleString() };
+
+      // Get existing egg data from localStorage
+      let eggs = JSON.parse(localStorage.getItem("eggs")) || [];
+
+      // Add new egg collection to the eggs array
+      eggs.push(eggData);
+      localStorage.setItem("eggs", JSON.stringify(eggs));
+
+      // Clear the form
+      document.getElementById("eggForm").reset();
+
+      // Update the egg collection history
+      updateEggList();
+    });
+
+    // Function to display egg collection history
+    function updateEggList() {
+      const eggs = JSON.parse(localStorage.getItem("eggs")) || [];
+      const eggList = document.getElementById("eggList");
+      eggList.innerHTML = "";
+
+      eggs.forEach(egg => {
+        const li = document.createElement("li");
+        li.textContent = `${egg.count} eggs collected on ${egg.date}`;
+        eggList.appendChild(li);
+      });
+    }
+
+    // Initial display of egg data
+    updateEggList();
+  </script>
+</body>
+</html>

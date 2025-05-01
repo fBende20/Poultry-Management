@@ -1,0 +1,43 @@
+form#expenseForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+form#expenseForm input,
+form#expenseForm button {
+  padding: 10px;
+  font-size: 16px;
+}
+
+#expenseTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#expenseTable th,
+#expenseTable td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+#expenseTable td button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#expenseTable td button:hover {
+  background-color: #d32f2f;
+}
+
+.tooltip {
+  font-size: 12px;
+  color: gray;
+  margin-left: 5px;
+}

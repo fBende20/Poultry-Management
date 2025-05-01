@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Medication</title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Poultry Management</h2>
+      <ul>
+        <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+        <li><a href="../expense/expense.html">Manage Expenses</a></li>
+        <li><a href="../sale/sale.html">Manage Sales</a></li>
+        <li><a href="../feeding/feeding.html">Manage Feeding</a></li>
+        <li><a href="../medication/medication.html">Manage Medication</a></li>
+        <li><a href="../egg/egg.html">Manage Egg Collection</a></li>
+      </ul>
+      <button id="logoutBtn" style="background:#f44336;color:white;padding:10px;border:none;border-radius:5px;">Logout</button>
+    </div>
+    
+    <div class="main-content">
+      <h1>Manage Medication</h1>
+      <form id="medicationForm">
+        <input type="text" id="medicationName" placeholder="Medication Name" required />
+        <input type="text" id="medicationDose" placeholder="Dose Given" required />
+        <button type="submit">Add Medication</button>
+      </form>
+
+      <h2>Medication History</h2>
+      <ul id="medicationList"></ul>
+    </div>
+  </div>
+
+  <!-- Secure Auth Logic -->
+  <script src="../auth/auth.js"></script>
+  <script>
+    protectDashboard();
+
+    // Medication Logic
+    document.getElementById("medicationForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const medicationName = document.getElementById("medicationName").value;
+      const medicationDose = document.getElementById("medicationDose").value;
+
+      const medicationData = { name: medicationName, dose: medicationDose, date: new Date().toLocaleString() };
+
+      // Get existing medication data from localStorage
+      let medications = JSON.parse(localStorage.getItem("medications")) || [];
+
+      // Add new medication to the medications array
+      medications.push(medicationData);
+      localStorage.setItem("medications", JSON.stringify(medications));
+
+      // Clear the form
+      document.getElementById("medicationForm").reset();
+
+      // Update the medication history
+      updateMedicationList();
+    });
+
+    // Function to display medication history
+    function updateMedicationList() {
+      const medications = JSON.parse(localStorage.getItem("medications")) || [];
+      const medicationList = document.getElementById("medicationList");
+      medicationList.innerHTML = "";
+
+      medications.forEach(medication => {
+        const li = document.createElement("li");
+        li.textContent = `${medication.name} - ${medication.dose} on ${medication.date}`;
+        medicationList.appendChild(li);
+      });
+    }
+
+    // Initial display of medication data
+    updateMedicationList();
+  </script>
+</body>
+</html>

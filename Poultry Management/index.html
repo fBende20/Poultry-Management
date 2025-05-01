@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Poultry Management Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0e4ff, #d0e9ff);
+      animation: fadeIn 1s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .main-content {
+      text-align: center;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      animation: bounceIn 1.5s;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #4a148c;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .auth-buttons a button {
+      background: linear-gradient(135deg, #8e2de2, #4a00e0);
+      color: white;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .auth-buttons a button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 480px) {
+      .auth-buttons {
+        flex-direction: column;
+      }
+
+      .auth-buttons a button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-content animate__animated animate__fadeInDown">
+    <img src="assets\images\hen.png" alt="Logo" class="logo animate__animated animate__pulse animate__infinite" />
+    <h1>Welcome to Poultry Management System</h1>
+    <p>Please log in or register to access your dashboard and manage your business efficiently.</p>
+    <div class="auth-buttons">
+      <a href="features/auth/login.html"><button>Login</button></a>
+      <a href="features/auth/register.html"><button>Register</button></a>
+    </div>
+  </div>
+</body>
+</html>
